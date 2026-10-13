@@ -1,0 +1,22 @@
+Postavka	Cena	Popust	Cena s popustom	Admin. del.	Gasilci IDA predhodni	Gasilci IDA obdobni	Gasilci predhodni	Gasilci obdobni	Grad. del.	Grad. del. (1)	Grad. del. - visoke gradnje	Komunalni delavec	Natakar	Kuhar	Avtomehanik	Čistilec	Voznik (avtobus)	Proizvodni delavec	Proiz. del. nočni	Delavec na višini	Viličarist, traktorist	Pek (nočno delo)
+Code				AD	GIDAP	GIDAO	GASP	GASO	GRAD	GRAD1	GRADVG	KOMD	NAT	KUH	AMEH	CIST	BUSDRV	PROIZ	PROIZN	DELVIS	VILIC	PEK
+Osnovni predhodni pregled	118.00	17%	97.94	x	x	x	x	x	x	x	x	x	x	x	x	x	x	x	x	x	x	x
+Osnovni obdobni pregled	110.00	17%	91.30	x	x	x	x	x	x	x	x	x	x	x	x	x	x	x	x	x	x	x
+Spirometrija	15.00	10%	13.50	x	x	x	x	x	x	x	x	x	x	x	x	x	x	x	x	x	x	x
+Niktometrija (kontrastni vid)	5.00	100%	0.00	i	x	x	x	x		i	x	x	i	i	x	i	x	i	x	x	x	x
+Perimetrija (pri vožnji, delu na višini)	15.00	10%	13.50	i	x	o	i	i	i	i	x	x	i	i	i	i	x	i	i	x	x	i
+ADG (sluh detajlno)	27.00	10%	24.30	i	i	i	i	i	x	x	x	x	i	i	x	i	i	x	x	i	x	i
+VTG (delo na višini)	32.00	10%	28.80		x	o	i	i	i	i	x	x	i	i	i	i	i	i	i	x	i	i
+Pletizmografija (ohladitveni test)	45.00		45.00		i	i	i	i	i	i	i	i			i			i	i	i	i	i
+Cikloergometrija*	95.00	5%	90.25		x	o,i	i	i				i	i	i	i	i	i					i
+Jetrni testi (AST, ALT, Gama GT)	5.14		5.14	i	x	x	x	x	x	x	x	x	x	x	x	i	x	i	i	x	x	x
+Sečnina, kreatinin	3.28		3.28	i	i	i	i	i	i	i	i	i	i	i	x	i	i	i	i	i	i	x
+Alkalna fosfataza, bilirubin cel., direktni	5.03		5.03	i	i	i	i	i	i	i	i	x	i	i	i	i	i	i	i	i	x	i
+Holesterol (celokupni, HDL, LDL, trigliceridi)	7.00		7.00	op	i	i	i	i	i	i	i	op	i	i	i	i	i	i	x	i	i	x
+Test na droge	25.30	30%	17.71	i	i	i	i	i				i	i	i	i	i	x	i	i	i	i	i
+% CDT	30.69		30.69	i	i	i	i	i	i	i	i	i	i	i	i	i	x	i	i	i	i	i
+Pregled pri psihologu	50.00	10%	45.00	i	x	i	i	i	i	i	x	x	i	i	i	i	x	i	pp/o	pp/o	x	pp/i
+RTG prsnega koša	50.00	10%	45.00	i	i	i	i	i	i	op	i	i			i	i	i	i	i	i	i	i
+Oftalmolog (pregled za delo)	49.00		49.00	i	i	i	i	i	i	i	i	i	i	i	i	i	i	i	i	i	i	i
+Cena predhodni				111.44	294.13		116.58		140.88	140.88	228.18	233.21	116.58	116.58	144.16	111.44	223.48	135.74	142.74	158.88	204.41	126.86
+Cena obdobni				104.80		109.94		109.94	134.24	134.24	221.54	226.57	109.94	109.94	137.52	104.80	216.84	129.10	136.10	152.24	197.77	120.22
