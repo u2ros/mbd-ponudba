@@ -3,7 +3,7 @@ name: ponudba
 description: whenever a new quote is needed, this skill will generate a quote based on the provided job codes and customer information from the provided link.
 argument-hint: <url> <jobs-csv> <quote> [issimple]
 arguments: [url, jobs, quote, issimple]
-allowed-tools: Read Write WebFetch Bash(curl:*) Bash(python3:*) Bash(pip:*) Bash(pip3:*)
+allowed-tools: Read Write WebFetch Bash(curl:*) Bash(.venv/bin/python:*) Bash(python3:*) Bash(pip:*) Bash(pip3:*)
 ---
 
 # ponudba
@@ -36,10 +36,10 @@ WebFetch summarises the page with a small model, so ask for the values verbatim 
 
 ### 2. Generate the PDF
 
-Run the bundled script (needs PyMuPDF; if `import pymupdf` fails, create a virtual environment, e.g. in the scratchpad directory, and `pip install pymupdf` there):
+Run the bundled script with the project virtual environment (`.venv/`, PyMuPDF already installed, no installs needed). Always call `.venv/bin/python` directly. If `.venv` is missing, recreate it with `python3 -m venv .venv && .venv/bin/pip install -r requirements.txt`:
 
 ```
-python3 .claude/skills/ponudba/make_quote.py --quote "$quote" --name "<C_NAME>" \
+.venv/bin/python .claude/skills/ponudba/make_quote.py --quote "$quote" --name "<C_NAME>" \
   --address "<C_ADDRESS>" --id "<C_ID>" --vat "<C_VAT>" --jobs "$jobs" [--simple]
 ```
 
