@@ -24,8 +24,14 @@ from pathlib import Path
 
 import pymupdf
 
-FONT_R = '/usr/share/fonts/truetype/liberation/LiberationSans-Regular.ttf'
-FONT_B = '/usr/share/fonts/truetype/liberation/LiberationSans-Bold.ttf'
+def _font(*candidates):
+    return next((p for p in candidates if Path(p).exists()), candidates[0])
+
+# Liberation Sans on Linux, metric-compatible Arial on macOS
+FONT_R = _font('/usr/share/fonts/truetype/liberation/LiberationSans-Regular.ttf',
+               '/System/Library/Fonts/Supplemental/Arial.ttf')
+FONT_B = _font('/usr/share/fonts/truetype/liberation/LiberationSans-Bold.ttf',
+               '/System/Library/Fonts/Supplemental/Arial Bold.ttf')
 TEAL = (0.043, 0.286, 0.353)
 GRAD1_NOTE = ('(1) rezanje, brušenje betona, kamnoseštvo, peskanje, vrtanje, mešanje cementa, '
               'obdelava keramičnih ploščic, opeke, strešnikov, rušenje')
