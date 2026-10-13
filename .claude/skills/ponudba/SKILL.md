@@ -11,12 +11,10 @@ allowed-tools: Read Write WebFetch Bash(curl:*) Bash(.venv/bin/python:*) Bash(py
 
 ## Arguments
 
-| Name        | Type      | Required | Description                                              |
-| ----------- | --------- | -------- | -------------------------------------------------------- |
-| `$url`      | link      | yes      | bizi.si link from which to fetch customer information    |
-| `$jobs`     | CSV array | yes      | list of job codes to fetch from matrika.tsv              |
-| `$quote`    | string    | yes      | quote number used for file naming and value substitution |
-| `$issimple` | boolean   | no       | use simplified quote template (default: false)           |
+- `$url`: bizi.si company page for the customer data
+- `$jobs`: comma-separated job codes from matrika.tsv, e.g. `GRAD,KUH`
+- `$quote`: quote number, used in the file name and on the quote
+- `$issimple`: optional, `true` for the simplified template (default `false`)
 
 Example: `/ponudba https://www.bizi.si/... GRAD,KUH 2026-001 false`
 
