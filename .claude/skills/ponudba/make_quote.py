@@ -7,6 +7,17 @@ Usage:
 
 Templates and matrika.tsv are read from the project root (default: three levels
 above this file), the output PDF is written to --outdir (default: <root>/ponudbe, created if missing).
+
+What it does:
+  - Replaces <QUOTE>, <DATE> (D.M.YYYY, today), <C_NAME>, <C_ADDRESS>, <C_ID>, <C_VAT> on page 1.
+  - Non-simple: builds the table from matrika.tsv (row 1 header, row 2 job codes). Keeps the first
+    4 columns (Postavka, Cena, Popust, Cena s popustom; no code) plus every column whose row-2 code
+    matches --jobs (case-insensitive, trimmed), drops row 2, copies cell values as they are, keeps
+    all rows including the bottom "Cena Predhodni" / "Cena Obdobni" rows. The table replaces <TABLE>
+    on landscape page 2 with the disclaimer moved underneath. GRAD1 appends footnote (1) to it.
+  - Simple (--simple): only placeholders are substituted, matrika.tsv / --jobs are not used.
+  - Warns on stderr about job codes with no column and about unfilled placeholders.
+  - --check: only validate --jobs against matrika.tsv (no PDF, no customer args needed).
 """
 import argparse, csv, datetime, re, sys
 from pathlib import Path
@@ -113,16 +124,28 @@ def fill_table_page(page, table, grad1):
 
 def main():
     ap = argparse.ArgumentParser()
-    ap.add_argument('--quote', required=True)
-    ap.add_argument('--name', required=True)
-    ap.add_argument('--address', required=True)
-    ap.add_argument('--id', required=True)
-    ap.add_argument('--vat', required=True)
+    ap.add_argument('--quote')
+    ap.add_argument('--name')
+    ap.add_argument('--address')
+    ap.add_argument('--id')
+    ap.add_argument('--vat')
     ap.add_argument('--jobs', default='', help='comma-separated job codes (ignored with --simple)')
     ap.add_argument('--simple', action='store_true')
+    ap.add_argument('--check', action='store_true', help='only validate --jobs, write no PDF')
     ap.add_argument('--root', type=Path, default=Path(__file__).resolve().parents[3])
     ap.add_argument('--outdir', type=Path)
     a = ap.parse_args()
+
+    if a.check:
+        if a.simple:
+            print('OK: simple quote, jobs not used')
+            return
+        _, missing = filtered_table(a.root / 'matrika.tsv', a.jobs.split(','))
+        print('MISSING: ' + ', '.join(missing) if missing else 'OK: all job codes match')
+        return
+    for k in ('quote', 'name', 'address', 'id', 'vat'):
+        if not getattr(a, k):
+            ap.error(f'--{k} is required')
 
     today = datetime.date.today()
     data = {'QUOTE': a.quote, 'DATE': f'{today.day}.{today.month}.{today.year}',  # D.M.YYYY
