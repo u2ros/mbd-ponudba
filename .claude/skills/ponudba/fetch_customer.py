@@ -2,7 +2,8 @@
 """Extract customer data from a bizi.si company page (stdlib only).
 
 Usage: fetch_customer.py <url>
-Prints C_NAME / C_ADDRESS / C_ID / C_VAT as KEY=value lines. Exits 1 and prints
+Prints C_NAME / C_ADDRESS / C_ID / C_VAT as KEY=value lines (C_VAT has no SI prefix
+for companies that are not VAT payers). Exits 1 and prints
 "FAILED: ..." for anything it cannot find, so the caller can fall back to reading the page.
 """
 import html, re, sys, urllib.request
@@ -25,9 +26,15 @@ def parse(page):
     m = re.search(r'Matična(?: številka)?\s*:\s*(\d+)', body)
     if m:
         out['C_ID'] = m.group(1)
-    m = re.search(r'\b(SI\d{8})\b', body) or re.search(r'Davčna številka\s*SI\s*:\s*(\d{8})', body)
+    # VAT payers have an SI-prefixed ID; non-payers only have a plain tax number (no SI prefix).
+    m = (re.search(r'\b(SI\d{8})\b', body)
+         or re.search(r'Davčna številka\s*SI\s*:\s*(\d{8})', body))
     if m:
         out['C_VAT'] = 'SI' + m.group(1).removeprefix('SI')
+    else:
+        m = re.search(r'Davčna številka\s*:\s*(\d{8})\b', body)
+        if m:
+            out['C_VAT'] = m.group(1)
     return out
 
 

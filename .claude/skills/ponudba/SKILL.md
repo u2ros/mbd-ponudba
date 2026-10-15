@@ -26,14 +26,14 @@ Parsed from the bizi.si page by `fetch_customer.py` before this prompt reached y
 
 !`.venv/bin/python ${CLAUDE_SKILL_DIR}/fetch_customer.py "$url"`
 
-If the output is four `KEY=value` lines (`C_NAME`, `C_ADDRESS`, `C_ID`, `C_VAT`), use them as they are. If it says `FAILED: ...`, or a value looks wrong (e.g. odd name, `C_ID` not digits, `C_VAT` not `SI` + 8 digits), fall back to reading the page yourself: fetch `$url` with WebFetch (it summarises with a small model, so ask for values verbatim) or `curl`, and identify each value by its meaning, since bizi.si labels vary. If still unsure, ask the user. Do not guess.
+If the output is four `KEY=value` lines (`C_NAME`, `C_ADDRESS`, `C_ID`, `C_VAT`), use them as they are. If it says `FAILED: ...`, or a value looks wrong (e.g. odd name, `C_ID` not digits, `C_VAT` neither `SI` + 8 digits nor, for a company that is not a VAT payer, plain 8 digits), fall back to reading the page yourself: fetch `$url` with WebFetch (it summarises with a small model, so ask for values verbatim) or `curl`, and identify each value by its meaning, since bizi.si labels vary. If still unsure, ask the user. Do not guess.
 
 | Variable    | Where on bizi.si                                  | Notes                                                           |
 | ----------- | ------------------------------------------------- | --------------------------------------------------------------- |
 | `C_NAME`    | page heading / company name (e.g. "PANARCH d.o.o.") | as shown                                                         |
 | `C_ADDRESS` | address in the contact line                       | as shown, e.g. "Šuceva ulica 25, Kranj, 4000 Kranj"             |
 | `C_ID`      | "Matična" / "Matična številka"                    | digits only                                                     |
-| `C_VAT`     | "Davčna številka SI" / "ID za DDV"                | with the `SI` prefix, e.g. `SI43524788`                         |
+| `C_VAT`     | "Davčna številka SI" / "ID za DDV"                | with the `SI` prefix, e.g. `SI43524788`; if "Zavezanec za DDV: Ne", plain "Davčna številka" (8 digits, no prefix) |
 
 Show the four values to the user in the final report so they can be checked.
 
