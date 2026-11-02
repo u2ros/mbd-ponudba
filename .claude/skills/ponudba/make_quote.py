@@ -89,37 +89,57 @@ def fill_table_page(page, table, grad1):
     fr, fb = pymupdf.Font(fontfile=FONT_R), pymupdf.Font(fontfile=FONT_B)
     ncols = len(table[0])
     widths = [250, 60, 55, 75]
-    widths += [(page.rect.width - 2 * x0 - sum(widths)) / (ncols - 4)] * (ncols - 4)
+    njob = ncols - 4
+    # widest job-column cell (totals like "123.58"); with many jobs, tighten the layout to fit
+    need = max(fb.text_length(r[i], fs) for r in table for i in range(4, ncols)) + 6
+    if njob and (page.rect.width - 2 * x0 - sum(widths)) / njob < need:
+        x0, widths = 40, [170, 50, 45, 60]
+    jw = (page.rect.width - 2 * x0 - sum(widths)) / njob if njob else 0
+    jfs = min(fs, fs * (jw - 4) / (need - 6)) if njob else fs
+    widths += [jw] * njob
+    sizes = [fs] * 4 + [jfs] * njob
 
-    def wrap(text, font, w):
+    def wrap(text, font, w, fs=fs):
         lines, cur = [], ''
         for word in text.split():
             t = (cur + ' ' + word).strip()
-            if font.text_length(t, fs) <= w - 6:
+            if font.text_length(t, fs) <= w - 6 or not cur:
                 cur = t
             else:
                 lines.append(cur)
                 cur = word
         return lines + [cur]
 
-    def row(cells, header=False):
+    def row(cells, header=False, draw=True):
         nonlocal y
         font = fb if header else fr
-        wrapped = [wrap(c, font, widths[i]) for i, c in enumerate(cells)]
-        h = max(len(w) for w in wrapped) * (fs + 2) + 6
+        wrapped = [wrap(c, font, widths[i], sizes[i]) for i, c in enumerate(cells)]
+        h = max(len(w) * (sizes[i] + 2) for i, w in enumerate(wrapped)) + 6
+        if not draw:
+            return h
         x = x0
         for i, lines in enumerate(wrapped):
             page.draw_rect(pymupdf.Rect(x, y, x + widths[i], y + h), color=(0.6, 0.6, 0.6),
                            fill=TEAL if header else None, width=0.5)
-            ty = y + 3 + fs
+            cfs = sizes[i]
+            ty = y + 3 + cfs
             for ln in lines:
-                tx = x + 3 if i == 0 else x + (widths[i] - font.text_length(ln, fs)) / 2
+                tx = x + 3 if i == 0 else x + (widths[i] - font.text_length(ln, cfs)) / 2
                 page.insert_text((tx, ty), ln, fontname='B' if header else 'R',
-                                 fontfile=FONT_B if header else FONT_R, fontsize=fs,
+                                 fontfile=FONT_B if header else FONT_R, fontsize=cfs,
                                  color=(1, 1, 1) if header else (0, 0, 0))
-                ty += fs + 2
+                ty += cfs + 2
             x += widths[i]
         y += h
+
+    # keep table + disclaimer above the footer (~y 505): move the table up into the empty top
+    # margin first, then shrink the font if it still does not fit
+    limit = page.rect.height - 90 - 40
+    total = lambda: row(table[0], True, False) + sum(row(r, False, False) for r in table[1:])
+    if y + total() > limit:
+        y = max(36, limit - total())
+        while y + total() > limit and sizes[0] > 5:
+            sizes = [s * 0.95 for s in sizes]
 
     row(table[0], header=True)
     for r in table[1:]:
