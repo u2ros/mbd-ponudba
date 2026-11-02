@@ -1,22 +1,27 @@
-Postavka	Cena	Popust	Cena s popustom	Admin. del.	Gasilci IDA predhodni	Gasilci IDA obdobni	Gasilci predhodni	Gasilci obdobni	Grad. del.	Grad. del. (1)	Grad. del. - visoke gradnje	Komunalni delavec	Natakar	Kuhar	Avtomehanik	Čistilec	Voznik (avtobus)	Proizvodni delavec	Proiz. del. nočni	Delavec na višini	Viličarist, traktorist	Pek (nočno delo)	Planinski vodnik	Vodstveni kadri
-Code				AD	GIDAP	GIDAO	GASP	GASO	GRAD	GRAD1	GRADVG	KOMD	NAT	KUH	AMEH	CIST	BUSDRV	PROIZ	PROIZN	DELVIS	VILIC	PEK	PLAN	DIR
-Osnovni predhodni pregled	118.00	17%	97.94	x	x	x	x	x	x	x	x	x	x	x	x	x	x	x	x	x	x	x	x	x
-Osnovni obdobni pregled	110.00	17%	91.30	x	x	x	x	x	x	x	x	x	x	x	x	x	x	x	x	x	x	x	x	x
-Spirometrija	15.00	10%	13.50	x	x	x	x	x	x	x	x	x	x	x	x	x	x	x	x	x	x	x	x	x
-Niktometrija (kontrastni vid)	5.00	100%	0.00	i	x	x	x	x		i	x	x	i	i	x	i	x	i	x	x	x	x	x	i
-Perimetrija (pri vožnji, delu na višini)	15.00	10%	13.50	i	x	o	i	i	i	i	x	x	i	i	i	i	x	i	i	x	x	i	x	i
-ADG (sluh detajlno)	27.00	10%	24.30	i	i	i	i	i	x	x	x	x	i	i	x	i	i	x	x	i	x	i	i	i
-VTG (delo na višini)	32.00	10%	28.80		x	o	i	i	i	i	x	x	i	i	i	i	i	i	i	x	i	i	x	i
-Pletizmografija (ohladitveni test)	45.00		45.00		i	i	i	i	i	i	i	i			i			i	i	i	i	i	i	i
-Cikloergometrija*	95.00	5%	90.25		x	o,i	i	i				i	i	i	i	i	i					i	i	i
-Jetrni testi (AST, ALT, Gama GT)	5.14		5.14	x	x	x	x	x	x	x	x	x	x	x	x	i	x	i	i	x	x	x	x	x
-Sečnina, kreatinin	3.28		3.28	i	i	i	i	i	i	i	i	i	i	i	x	i	i	i	i	i	i	x	i	i
-Alkalna fosfataza, bilirubin cel., direktni	5.03		5.03	i	i	i	i	i	i	i	i	x	i	i	i	i	i	i	i	i	x	i	i	i
-Holesterol (celokupni, HDL, LDL, trigliceridi)	7.00		7.00	op	i	i	i	i	i	i	i	op	i	i	i	i	i	i	x	i	i	x	i	x
-Test na droge	25.30	30%	17.71	i	i	i	i	i				i	i	i	i	i	x	i	i	i	i	i	x	i
-% CDT	30.69		30.69	i	i	i	i	i	i	i	i	i	i	i	i	i	x	i	i	i	i	i	i	i
-Pregled pri psihologu	50.00	10%	45.00	i	x	i	i	i	i	i	x	x	i	i	i	i	x	i	pp/o	pp/o	x	pp/i	pp/i	i
-RTG prsnega koša	50.00	10%	45.00	i	i	i	i	i	i	op	i	i			i	i	i	i	i	i	i	i	i	i
-Oftalmolog (pregled za delo)	49.00		49.00	i	i	i	i	i	i	i	i	i	i	i	i	i	i	i	i	i	i	i	i	i
-Cena predhodni				116.58	294.13		116.58		140.88	140.88	228.18	233.21	116.58	116.58	144.16	111.44	223.48	135.74	142.74	158.88	204.41	126.86	176.59	123.58
-Cena obdobni				109.94		109.94		109.94	134.24	134.24	221.54	226.57	109.94	109.94	137.52	104.80	216.84	129.10	136.10	152.24	197.77	120.22	169.95	116.94
+Postavka	Cena	Popust	S popustom	1	2	3	4	5	6	7	8	9	10	11	12	13	14	15	16	17	18	19
+Code				SK1	SK2	SK3	SK4	SK5	SK6	SK7	SK8	SK9	SK10	SK11	SK12	SK13	SK14	SK15	SK16	SK17	SK18	SK19
+Osnovni predhodni pregled	118	17%	97.94	x	x	x	x	x	x	x	x	x	x	x	x	x	x	x	x	x	x	x
+Osnovni obdobni pregled	110	17%	91.3	x	x	x	x	x	x	x	x	x	x	x	x	x	x	x	x	x	x	x
+Spirometrija	15	10%	13.5	x	x	x	x	x	x	x	x	x	x	x	x	x	x	x	x	x	x	x
+Niktometrija (kontrastni vid)	5	100%	0	I	I	I	I	I	I	I	I	I	I	I	I	I	I	I	I	I	I	I
+Perimetrija (pri vožnji, delu na višini)	15	10%	13.5	I	I	I	I	I	I	I	I	I	I	I	I	I	I	I	I	I	I	I
+ADG (sluh detajlno)	27	10%	24.3	I	I	I	I	I	I	I	I	I	I	I	I	I	I	I	I	I	I	I
+VTG (delo na višini)	32	10%	28.8	I	I	I	I	I	I	I	I	I	I	I	I	I	I	I	I	I	I	I
+Pletizmografija (ohladitveni test)	45		45	I	I	I	I	I	I	I	I	I	I	I	I	I	I	I	I	I	I	I
+Cikloergometrija*	95	5%	90.25	I	I	I	I	I	I	I	I	I	I	I	I	I	I	I	I	I	I	I
+Jetrni testi (AST, ALT, Gama GT)	5.14		5.14	x	x	x	x	x	x	x	x	x	x	x	x	x	x	x	x	x	x	x
+Sečnina, kreatinin	3.28		3.28	I	I	I	I	I	I	I	I	I	I	I	I	I	I	I	I	I	I	I
+Alkalna fosfataza, bilirubin cel., direktni	5.03		5.03	I	I	I	I	I	I	I	I	I	I	I	I	I	I	I	I	I	I	I
+Holesterol (celokupni, HDL, LDL, trigliceridi)	7		7	x	x	x	x	x	x	x	x	x	x	x	x	x	x	x	x	x	x	x
+Test na droge	25.3	30%	17.71	I	I	I	I	I	I	I	I	I	I	I	I	I	I	I	I	I	I	I
+% CDT	30.69		30.69	I	I	I	I	I	I	I	I	I	I	I	I	I	I	I	I	I	I	I
+Pregled pri psihologu	50	10%	45	I	I	I	I	I	I	I	pp	pp	I	I	pp	pp	I	I	I	I	I	I
+RTG prsnega koša	50	25%	37.5	I	I	I	I	I	I	I	I	I	I	I	I	I	I	I	I	I	I	I
+Oftalmolog (pregled za delo)	49		49	I	I	I	I	I	I	I	I	I	I	I	I	I	I	I	I	I	I	I
+Hepatitis B (HBs Ag - presejalni test)	20.59		20.59	I	I	I	I	I	I	I	I	I	I	I	I	I	I	I	I	I	I	I
+Hepatitis B (protitelesa anti HBc)	20.16		20.16	I	I	I	I	I	I	I	I	I	I	I	I	I	I	I	I	I	I	I
+anti HBs (kvantitativno)	20.16		20.16	I	I	I	I	I	I	I	I	I	I	I	I	I	I	I	I	I	I	I
+Hepatitis C (anti-HCV, presejalni test)	27.6		27.6	I	I	I	I	I	I	I	I	I	I	I	I	I	I	I	I	I	I	I
+HIV	17.28		17.28	I	I	I	I	I	I	I	I	I	I	I	I	I	I	I	I	I	I	I
+Cena predhodni				123.58	123.58	123.58	123.58	123.58	123.58	123.58	168.58	168.58	123.58	123.58	168.58	168.58	123.58	123.58	123.58	123.58	123.58	123.58
+Cena obdobni				116.94	116.94	116.94	116.94	116.94	116.94	116.94	116.94	116.94	116.94	116.94	116.94	116.94	116.94	116.94	116.94	116.94	116.94	116.94
