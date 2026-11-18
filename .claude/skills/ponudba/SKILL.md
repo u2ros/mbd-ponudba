@@ -14,7 +14,7 @@ allowed-tools: Read Write WebFetch Bash(curl:*) Bash(.venv/bin/python:*) Bash(py
 - `$url`: bizi.si company page for the customer data
 - `$jobs`: comma-separated job codes from matrika.tsv, e.g. `GRAD,KUH`
 - `$quote`: quote number, used in the file name and on the quote
-- `$issimple`: optional, `true` for the simplified template (default `false`)
+- `$issimple`: optional, `true` for the simplified template `quote-simple.pdf` (default `false`)
 
 Example: `/ponudba https://www.bizi.si/... GRAD,KUH 2026-001 false`
 
@@ -35,7 +35,7 @@ If the output is four `KEY=value` lines (`C_NAME`, `C_ADDRESS`, `C_ID`, `C_VAT`)
 | `C_ID`      | "Matična" / "Matična številka"                    | digits only                                                     |
 | `C_VAT`     | "Davčna številka SI" / "ID za DDV"                | with the `SI` prefix, e.g. `SI43524788`; if "Zavezanec za DDV: Ne", plain "Davčna številka" (8 digits, no prefix) |
 
-Show the four values to the user in the final report so they can be checked.
+Show the four values to the user in the final report so they can be checked. The simple template has no `Matična` field, so with `$issimple` true `C_ID` is not used (no need to fall back if only it is missing).
 
 ### 2. Generate the PDF
 
@@ -52,8 +52,8 @@ Run the script with the project virtual environment (always call `.venv/bin/pyth
   --address "<C_ADDRESS>" --id "<C_ID>" --vat "<C_VAT>" --jobs "$jobs" [--simple]
 ```
 
-Pass `--simple` when `$issimple` is true (it uses `quote_simple.pdf`; `--jobs` may be omitted). The script's docstring (`--help`) describes what it does; only read it if something goes wrong. It prints warnings (stderr) for job codes that match no column and for placeholders left unfilled.
+Pass `--simple` when `$issimple` is true (it uses `quote-simple.pdf`, which already contains the full price list and only has `<QUOTE>`, `<DATE>`, `<C_NAME>`, `<C_ADDRESS>`, `<C_VAT>` placeholders; `--jobs` and `--id` may be omitted). The script's docstring (`--help`) describes what it does; only read it if something goes wrong. It prints warnings (stderr) for job codes that match no column and for placeholders left unfilled.
 
 ### 3. Output
 
-The script saves `<YYYY-MM-DD>_<C_NAME>_<QUOTE>.pdf` (today's date, ISO) in the `ponudbe/` folder of the project root (created by the script if it does not exist) and prints the path. Render the pages to images and look at them to check for overflow and left-over `<...>` placeholders, then report the path and the four customer values used.
+The script saves `<YYYY-MM-DD>_<C_NAME>_<QUOTE>.pdf` (today's date, ISO) in the `ponudbe/` folder of the project root (created by the script if it does not exist) and prints the path. Render the pages to images and look at them to check for overflow and left-over `<...>` placeholders, then report the path and the customer values used.

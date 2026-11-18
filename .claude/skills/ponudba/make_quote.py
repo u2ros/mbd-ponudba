@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Generate a quote PDF from quote.pdf / quote_simple.pdf (requires PyMuPDF).
+"""Generate a quote PDF from quote.pdf / quote-simple.pdf (requires PyMuPDF).
 
 Usage:
   make_quote.py --quote 2026-155 --name "PANARCH d.o.o." --address "..." \
@@ -9,7 +9,8 @@ Templates and matrika.tsv are read from the project root (default: three levels
 above this file), the output PDF is written to --outdir (default: <root>/ponudbe, created if missing).
 
 What it does:
-  - Replaces <QUOTE>, <DATE> (D.M.YYYY, today), <C_NAME>, <C_ADDRESS>, <C_ID>, <C_VAT> on page 1.
+  - Replaces <QUOTE>, <DATE> (D.M.YYYY, today), <C_NAME>, <C_ADDRESS>, <C_ID>, <C_VAT> on page 1
+    (quote-simple.pdf has no <C_ID>, so --id is optional with --simple).
   - Non-simple: builds the table from matrika.tsv (row 1 header, row 2 job codes). Keeps the first
     4 columns (Postavka, Cena, Popust, Cena s popustom; no code) plus every column whose row-2 code
     matches --jobs (case-insensitive, trimmed), drops row 2, copies cell values as they are, keeps
@@ -51,19 +52,24 @@ def filtered_table(tsv, codes):
 
 
 def fill_page1(page, data):
-    spans = {}
+    """Replace each <KEY> on the page (also inside longer spans) in its own size and colour."""
+    hits = []
     for b in page.get_text('dict')['blocks']:
         for line in b.get('lines', []):
             for s in line['spans']:
-                t = s['text'].strip()
-                if PLACEHOLDER.fullmatch(t) and t[1:-1] in data:
-                    spans[t[1:-1]] = s
-    for s in spans.values():
-        page.add_redact_annot(pymupdf.Rect(s['bbox']) + (-1, -1, 40, 1), fill=(1, 1, 1))
+                for m in PLACEHOLDER.finditer(s['text']):
+                    if m.group()[1:-1] not in data:
+                        continue
+                    rects = page.search_for(m.group(), clip=pymupdf.Rect(s['bbox']) + (-1, -1, 1, 1))
+                    if rects:
+                        hits.append((m.group()[1:-1], rects[0], s))
+    for _, r, _ in hits:
+        page.add_redact_annot(r + (-0.5, -0.5, 0.5, 0.5), fill=(1, 1, 1))
     page.apply_redactions(images=pymupdf.PDF_REDACT_IMAGE_NONE,
                           graphics=pymupdf.PDF_REDACT_LINE_ART_NONE)
-    for k, s in spans.items():
-        page.insert_text(s['origin'], data[k], fontname='R', fontfile=FONT_R, fontsize=s['size'])
+    for k, r, s in hits:
+        page.insert_text((r.x0, s['origin'][1]), data[k], fontname='R', fontfile=FONT_R,
+                         fontsize=s['size'], color=pymupdf.sRGB_to_pdf(s['color']))
 
 
 def fill_table_page(page, table, grad1):
@@ -149,15 +155,15 @@ def main():
         _, missing = filtered_table(a.root / 'matrika.tsv', a.jobs.split(','))
         print('MISSING: ' + ', '.join(missing) if missing else 'OK: all job codes match')
         return
-    for k in ('quote', 'name', 'address', 'id', 'vat'):
+    for k in ('quote', 'name', 'address', 'vat') + (() if a.simple else ('id',)):
         if not getattr(a, k):
             ap.error(f'--{k} is required')
 
     today = datetime.date.today()
     data = {'QUOTE': a.quote, 'DATE': f'{today.day}.{today.month}.{today.year}',  # D.M.YYYY
-            'C_NAME': a.name, 'C_ADDRESS': a.address, 'C_ID': a.id, 'C_VAT': a.vat}
+            'C_NAME': a.name, 'C_ADDRESS': a.address, 'C_ID': a.id or '', 'C_VAT': a.vat}
 
-    doc = pymupdf.open(a.root / ('quote_simple.pdf' if a.simple else 'quote.pdf'))
+    doc = pymupdf.open(a.root / ('quote-simple.pdf' if a.simple else 'quote.pdf'))
     fill_page1(doc[0], data)
     if not a.simple:
         codes = a.jobs.split(',')
